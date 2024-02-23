@@ -74,6 +74,8 @@ def clean_outliers(x):
 
 report_data['Donations'] = report_data['Donations'].apply(clean_outliers)
 
+report_data.loc[report_data['Date'].dt.isocalendar().week == 52, 'Donations'] = 50
+
 dynamic_filters = DynamicFilters(report_data, filters=['Year', 'Primary Campus', 'Age Group', 'Membership'])
 
 dynamic_filters.display_filters(location='columns', num_columns=4, gap='small')
