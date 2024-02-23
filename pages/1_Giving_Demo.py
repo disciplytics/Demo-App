@@ -91,7 +91,7 @@ pytd_mean = df_filtered[df_filtered['Date'].dt.year == previous_year]['Donations
 with ytd_col:
     st.metric(label="Year to Date Giving", value=f"${format(int(np.round(ytd_sum,0)), ',d')}", delta=f"{format(int(np.round(pytd_sum - ytd_sum,0)), ',d')}" + ' (+/-) From Last YTD', delta_color="normal")
 with yoy_col:
-    st.metric(label="Year Over Year Giving", value="{:.2f}%".format(yoy), delta="{:.2f}".format(yoy - pyoy) + ' (+/-) From Last YTD', delta_color="normal")
+    st.metric(label="Year Over Year Giving", value="{:.2f}%".format(yoy))
 with avg_col:
     st.metric(label="Average Donation", value="${:.2f}".format(ytd_mean), delta="{:.2f}".format(ytd_mean - pytd_mean) + ' (+/-) From Last YTD', delta_color="normal")
 
