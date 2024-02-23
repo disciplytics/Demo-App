@@ -12,6 +12,7 @@ st.set_page_config(
 
 st.title('Giving Report Demo')
 st.write('This app contains synthetic data and is for demo purposes only.')
+st.write(' ')
 
 series_length = 3 * 52
 
@@ -55,11 +56,13 @@ for i in dims_pc:
                 'Membership': k
             })
 
+            data['Year'] = data['Date'].dt.year.astype(int)
+            
             data['Donations'] = data['Donations_'] * data['Weight']
 
             report_data = pd.concat([report_data, data])
 
-report_data['Year'] = report_data['Date'].dt.year.astype(int)
+
 
 dynamic_filters = DynamicFilters(report_data, filters=['Year', 'Primary Campus', 'Age Group', 'Membership'])
 
