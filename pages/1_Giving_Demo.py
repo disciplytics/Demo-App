@@ -114,7 +114,7 @@ weekly_tab, monthly_tab, date_tab = st.tabs(['Weekly YoY', 'Monthly YoY', 'Date 
 
 with weekly_tab:
     weekly_fig = px.line(
-        df_filtered.groupby(['Year', 'Week'])['Donations'].sum().reset_index(),
+        df_filtered.groupby(['Year', 'Week'])['Donations'].sum().apply(clean_outliers).reset_index(),
         x = 'Week',
         y = 'Donations',
         color='Year',
@@ -124,7 +124,7 @@ with weekly_tab:
 
 with monthly_tab:
     monthly_fig = px.line(
-        df_filtered.groupby(['Year', 'Month'])['Donations'].sum().reset_index(),
+        df_filtered.groupby(['Year', 'Month'])['Donations'].sum().apply(clean_outliers).reset_index(),
         x = 'Month',
         y = 'Donations',
         color='Year',
@@ -134,7 +134,7 @@ with monthly_tab:
 
 with date_tab:
     date_fig = px.line(
-        df_filtered.groupby(['Date'])['Donations'].sum().reset_index(),
+        df_filtered.groupby(['Date'])['Donations'].sum().apply(clean_outliers).reset_index(),
         x = 'Date',
         y = 'Donations',
         title='Giving Trend'
@@ -145,7 +145,7 @@ camp_col, ag_col, mem_col = st.columns(3)
 
 with camp_col:
     camp_fig = px.bar(
-        df_filtered.groupby(['Primary Campus'])['Donations'].sum().sort_values(ascending=True).reset_index(),
+        df_filtered.groupby(['Primary Campus'])['Donations'].sum().apply(clean_outliers).sort_values(ascending=True).reset_index(),
         y = 'Primary Campus',
         x = 'Donations',
         title='Giving By Primary Campus'
@@ -154,7 +154,7 @@ with camp_col:
 
 with ag_col:
     ag_fig = px.bar(
-        df_filtered.groupby(['Age Group'])['Donations'].sum().sort_values(ascending=True).reset_index(),
+        df_filtered.groupby(['Age Group'])['Donations'].sum().apply(clean_outliers).sort_values(ascending=True).reset_index(),
         y = 'Age Group',
         x = 'Donations',
         title='Giving By Age Group'
@@ -163,7 +163,7 @@ with ag_col:
 
 with mem_col:
     mem_fig = px.bar(
-        df_filtered.groupby(['Membership'])['Donations'].sum().sort_values(ascending=True).reset_index(),
+        df_filtered.groupby(['Membership'])['Donations'].sum().apply(clean_outliers).sort_values(ascending=True).reset_index(),
         y = 'Membership',
         x = 'Donations',
         title='Giving By Membership'
