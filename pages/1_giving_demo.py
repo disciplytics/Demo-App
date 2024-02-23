@@ -18,13 +18,33 @@ dims_mem = ['Guest', 'Attendee', 'Member']
 report_data = pd.DataFrame()
 
 for i in dims_pc:
+    if i == 'Campus 1':
+                weight_i = 1
+            elif i == 'Campus 2':
+                weight_i = 0.7
+            elif i == 'Campus 3':
+                weight_i = 0.2
     for j in dims_ag:
+        if j == 'Young Adult (18-29)':
+                weight_j = 0.1
+            elif j == 'Senior (65+)':
+                weight_j = 0.3
+            elif j == 'Adult (30-64)':
+                weight_j = 1
         for k in dims_mem:
+            if k == 'Guest':
+                weight_k = 0.25
+            elif k == 'Attendee':
+                weight_k = 0.67
+            elif k == 'Member':
+                weight_k = 1
+
+            weight = weight_k * weight_j * weight_i
             data = pd.DataFrame(
             {
                 'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
                 'Donations_': np.random.randint(50, 200, size=(series_length)).astype(int),
-                'Weight': np.random.rand(series_length).astype(float),
+                'Weight': weight
                 'Primary Campus': i,
                 'Age Group': j,
                 'Membership': k
