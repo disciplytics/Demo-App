@@ -72,11 +72,11 @@ df_filtered = dynamic_filters.filter_df()
 
 ytd_col, yoy_col, avg_col = st.columns(3)
 
-current_year = pd.Timestamp.now().year
+current_year = df_filtered['Date'].year.max()
 current_month = pd.Timestamp.now().month
 current_week = pd.Timestamp.now().isocalendar().week -1
-previous_year = pd.Timestamp.now().year - 1
-two_previous_year = pd.Timestamp.now().year - 2
+previous_year = df_filtered['Date'].year.max() - 1
+two_previous_year = df_filtered['Date'].year.max() - 2
 
 ytd_sum = df_filtered[df_filtered['Date'].dt.year == current_year]['Donations'].sum()
 pytd_sum = df_filtered[(df_filtered['Date'].dt.year == previous_year) &
