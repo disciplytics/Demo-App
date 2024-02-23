@@ -65,7 +65,7 @@ for i in dims_pc:
 def clean_outliers(x):
     median_x = np.median(x)
     std_x = np.std(x)
-    ucl_x = median_x + 3*std_x
+    ucl_x = median_x + 2*std_x
 
     if x > ucl_x:
         x = median_x
