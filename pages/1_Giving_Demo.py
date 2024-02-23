@@ -62,7 +62,17 @@ for i in dims_pc:
 
             report_data = pd.concat([report_data, data])
 
+def clean_outliers(x):
+    median_x = np.median(x)
+    std_x = np.std(x)
+    ucl_x = median_x + 3*std_x
 
+    if x > ucl_x:
+        x = median_x
+
+    return x
+
+report_data['Donations'] = report_data['Donations'].apply(clean_outliers)
 
 dynamic_filters = DynamicFilters(report_data, filters=['Year', 'Primary Campus', 'Age Group', 'Membership'])
 
