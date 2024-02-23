@@ -49,7 +49,7 @@ for i in dims_pc:
             data = pd.DataFrame(
             {
                 'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                'Donations_': np.random.randint(50, 200, size=(series_length)).astype(int),
+                'Donations_': np.random.randint(50, 100, size=(series_length)).astype(int),
                 'Weight': weight,
                 'Primary Campus': i,
                 'Age Group': j,
@@ -66,7 +66,7 @@ for i in dims_pc:
 
 dynamic_filters = DynamicFilters(report_data, filters=['Year', 'Primary Campus', 'Age Group', 'Membership'])
 
-dynamic_filters.display_filters(location='columns', num_columns=4, gap='small')
+dynamic_filters.display_filters(location='columns', num_columns=4, gap='medium')
 df_filtered = dynamic_filters.filter_df()
 
 ytd_col, yoy_col, avg_col = st.columns(3)
