@@ -19,18 +19,18 @@ report_data = pd.DataFrame()
 
 for i in dims_pc:
     if i == 'Campus 1':
-                weight_i = 1
-            elif i == 'Campus 2':
-                weight_i = 0.7
-            elif i == 'Campus 3':
-                weight_i = 0.2
+        weight_i = 1
+    elif i == 'Campus 2':
+        weight_i = 0.7
+    elif i == 'Campus 3':
+        weight_i = 0.2
     for j in dims_ag:
         if j == 'Young Adult (18-29)':
-                weight_j = 0.1
-            elif j == 'Senior (65+)':
-                weight_j = 0.3
-            elif j == 'Adult (30-64)':
-                weight_j = 1
+            weight_j = 0.1
+        elif j == 'Senior (65+)':
+            weight_j = 0.3
+        elif j == 'Adult (30-64)':
+            weight_j = 1
         for k in dims_mem:
             if k == 'Guest':
                 weight_k = 0.25
