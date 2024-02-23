@@ -74,7 +74,7 @@ ytd_col, yoy_col, avg_col = st.columns(3)
 
 current_year = pd.Timestamp.now().year
 current_month = pd.Timestamp.now().month
-current_week = pd.Timestamp.now().isocalendar().week
+current_week = pd.Timestamp.now().isocalendar().week -1
 previous_year = pd.Timestamp.now().year - 1
 two_previous_year = pd.Timestamp.now().year - 2
 
