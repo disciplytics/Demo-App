@@ -8,7 +8,7 @@ import plotly.express as px
 st.title('Giving Report Demo')
 st.write('This app contains synthetic data and is for demo purposes only.')
 
-series_length = 3 * 52
+series_length = 2 * 52
 
 dims_pc = ['Campus 1', 'Campus 2', 'Campus 3']
 dims_ag = ['Young Adult (18-29)', 'Adult (30-64)', 'Senior (65+)']
