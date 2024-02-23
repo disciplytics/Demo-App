@@ -63,10 +63,10 @@ for i in dims_pc:
             report_data = pd.concat([report_data, data])
 
 
-
+st.write(report_data)
 dynamic_filters = DynamicFilters(report_data, filters=['Year', 'Primary Campus', 'Age Group', 'Membership'])
 
-dynamic_filters.display_filters(location='columns', num_columns=4, gap='medium')
+dynamic_filters.display_filters(location='columns', num_columns=4, gap='small')
 df_filtered = dynamic_filters.filter_df()
 
 ytd_col, yoy_col, avg_col = st.columns(3)
