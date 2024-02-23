@@ -11,9 +11,7 @@ st.set_page_config(
 )
 
 st.title('Giving Report Demo')
-st.write('This app contains synthetic data and is for demo purposes only.
-
-         ')
+st.write('This app contains synthetic data and is for demo purposes only.')
 
 series_length = 3 * 52
 
