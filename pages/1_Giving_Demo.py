@@ -80,6 +80,7 @@ dynamic_filters.display_filters(location='columns', num_columns=4, gap='small')
 
 df_filtered = dynamic_filters.filter_df()
 
+st.write(df_filtered)
 ytd_col, yoy_col, avg_col = st.columns(3)
 
 current_year = df_filtered['Date'].dt.year.max()
