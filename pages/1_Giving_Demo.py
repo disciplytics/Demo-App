@@ -74,8 +74,6 @@ def clean_outliers(x):
 
 report_data['Donations'] = report_data['Donations'].apply(clean_outliers)
 
-report_data.loc[report_data['Date'].dt.isocalendar().week == 52, 'Donations'] = 10
-
 dynamic_filters = DynamicFilters(report_data, filters=['Year', 'Primary Campus', 'Age Group', 'Membership'])
 
 dynamic_filters.display_filters(location='columns', num_columns=4, gap='small')
@@ -115,8 +113,10 @@ df_filtered['Year'] = df_filtered['Date'].dt.year
 weekly_tab, monthly_tab, date_tab = st.tabs(['Weekly YoY', 'Monthly YoY', 'Date Trend'])
 
 with weekly_tab:
+    week_df = df_filtered.groupby(['Year', 'Week'])['Donations'].sum().apply(clean_outliers).reset_index()
+    week_df.loc[week_df['Date'].dt.isocalendar().week == 52, 'Donations'] = 10
     weekly_fig = px.line(
-        df_filtered.groupby(['Year', 'Week'])['Donations'].sum().apply(clean_outliers).reset_index(),
+        week_df,
         x = 'Week',
         y = 'Donations',
         color='Year',
