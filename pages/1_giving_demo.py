@@ -119,7 +119,7 @@ camp_col, ag_col, mem_col = st.columns(3)
 
 with camp_col:
     camp_fig = px.bar(
-        report_data.groupby(['Primary Campus'])['Donations'].sum().sort_values(ascending=False).reset_index(),
+        report_data.groupby(['Primary Campus'])['Donations'].sum().sort_values(ascending=True).reset_index(),
         y = 'Primary Campus',
         x = 'Donations',
         title='Giving By Primary Campus'
@@ -128,7 +128,7 @@ with camp_col:
 
 with ag_col:
     ag_fig = px.bar(
-        report_data.groupby(['Age Group'])['Donations'].sum().sort_values(ascending=False).reset_index(),
+        report_data.groupby(['Age Group'])['Donations'].sum().sort_values(ascending=True).reset_index(),
         y = 'Age Group',
         x = 'Donations',
         title='Giving By Age Group'
@@ -137,7 +137,7 @@ with ag_col:
 
 with mem_col:
     mem_fig = px.bar(
-        report_data.groupby(['Membership'])['Donations'].sum().sort_values(ascending=False).reset_index(),
+        report_data.groupby(['Membership'])['Donations'].sum().sort_values(ascending=True).reset_index(),
         y = 'Membership',
         x = 'Donations',
         title='Giving By Membership'
