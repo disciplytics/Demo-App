@@ -73,7 +73,7 @@ ytd_mean = report_data[report_data['Date'].dt.year == current_year]['Donations']
 pytd_mean = report_data[report_data['Date'].dt.year == previous_year]['Donations'].mean()
 
 with ytd_col:
-    st.metric(label="Year to Date Giving", value="${:.2f}".format(ytd_sum), delta="${:.2f}".format(ytd_sum - pytd_sum) + ' (+/-) From Last YTD', delta_color="normal")
+    st.metric(label="Year to Date Giving", value=f"${format(int(np.round(ytd_sum,0)), ',d')}", delta=f"${format(int(np.round(pytd_sum - ytd_sum,0)), ',d')}" + ' (+/-) From Last YTD', delta_color="normal")
 with yoy_col:
     st.metric(label="Year Over Year Giving", value="{:.2f}%".format(yoy), delta="{:.2f}%".format(yoy - pyoy) + ' (+/-) From Last YTD', delta_color="normal")
 with avg_col:
