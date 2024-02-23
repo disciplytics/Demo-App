@@ -15,7 +15,7 @@ st.markdown(
         
         This app is a taste of what we can offer to your church!
 
-        **👈 Select a demo from the dropdown on the left** to see some examples
+        **👈 Select a demo in the sidebar on the left** to see some examples
         of what Disciplytics can do!
 
         ### Want to learn more?
