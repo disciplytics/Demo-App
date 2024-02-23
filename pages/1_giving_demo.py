@@ -44,7 +44,7 @@ for i in dims_pc:
             {
                 'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
                 'Donations_': np.random.randint(50, 200, size=(series_length)).astype(int),
-                'Weight': weight
+                'Weight': weight,
                 'Primary Campus': i,
                 'Age Group': j,
                 'Membership': k
