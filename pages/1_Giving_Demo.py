@@ -114,7 +114,7 @@ weekly_tab, monthly_tab, date_tab = st.tabs(['Weekly YoY', 'Monthly YoY', 'Date 
 
 with weekly_tab:
     week_df = df_filtered.groupby(['Year', 'Week'])['Donations'].sum().apply(clean_outliers).reset_index()
-    week_df.loc[week_df['Date'].dt.isocalendar().week == 52, 'Donations'] = 10
+    week_df.loc[week_df['Week'] == 52, 'Donations'] = 10
     weekly_fig = px.line(
         week_df,
         x = 'Week',
