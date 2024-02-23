@@ -49,14 +49,14 @@ for i in dims_pc:
             data = pd.DataFrame(
             {
                 'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                'Donations_': np.random.randint(50, 100, size=(series_length)).astype(category),
+                'Donations_': np.random.randint(50, 100, size=(series_length)).astype(int),
                 'Weight': weight,
                 'Primary Campus': i,
                 'Age Group': j,
                 'Membership': k
             })
 
-            data['Year'] = data['Date'].dt.year.astype(int)
+            data['Year'] = data['Date'].dt.year.astype(str)
             
             data['Donations'] = data['Donations_'] * data['Weight']
 
