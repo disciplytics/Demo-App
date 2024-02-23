@@ -121,7 +121,7 @@ with weekly_tab:
         y = 'Donations',
         color='Year',
         title='Year Over Year Giving By Week'
-    ).update_layout(yaxis_visible=False, xaxis_visible=False)
+    ).update_layout(yaxis_title=None, xaxis_title=None)
     weekly_tab.plotly_chart(weekly_fig, use_container_width=True)
 
 with monthly_tab:
@@ -131,7 +131,7 @@ with monthly_tab:
         y = 'Donations',
         color='Year',
         title='Year Over Year Giving By Month'
-    ).update_layout(yaxis_visible=False, xaxis_visible=False)
+    ).update_layout(yaxis_title=None, xaxis_title=None)
     monthly_tab.plotly_chart(monthly_fig, use_container_width=True)
 
 with date_tab:
@@ -140,7 +140,7 @@ with date_tab:
         x = 'Date',
         y = 'Donations',
         title='Giving Trend'
-    ).update_layout(yaxis_visible=False, xaxis_visible=False)
+    ).update_layout(yaxis_title=None, xaxis_title=None)
     date_tab.plotly_chart(date_fig, use_container_width=True)
 
 camp_col, ag_col, mem_col = st.columns(3)
@@ -151,7 +151,7 @@ with camp_col:
         y = 'Primary Campus',
         x = 'Donations',
         title='Giving By Primary Campus'
-    ).update_layout(yaxis_visible=False, xaxis_visible=False)
+    ).update_layout(yaxis_title=None, xaxis_title=None)
     st.plotly_chart(camp_fig, use_container_width=True)
 
 with ag_col:
@@ -160,7 +160,7 @@ with ag_col:
         y = 'Age Group',
         x = 'Donations',
         title='Giving By Age Group'
-    ).update_layout(yaxis_visible=False, xaxis_visible=False)
+    ).update_layout(yaxis_title=None, xaxis_title=None)
     st.plotly_chart(ag_fig, use_container_width=True)
 
 with mem_col:
@@ -169,5 +169,5 @@ with mem_col:
         y = 'Membership',
         x = 'Donations',
         title='Giving By Membership'
-    ).update_layout(yaxis_visible=False, xaxis_visible=False)
+    ).update_layout(yaxis_title=None, xaxis_title=None)
     st.plotly_chart(mem_fig, use_container_width=True)
