@@ -27,7 +27,7 @@ st.markdown(
         - Year-to-Date (YTD) is the sum of data, i.e. giving, checkins, headcounts, etc, of the current year since the last sunday.
 
         - Last Year-to-Date (LYTD) is the sum of data, i.e. giving, checkins, headcounts, etc, of the previous year since the last sunday's week number. 
-            Example: If we are in the third week of the current year, then LYTD would be the sum of giving at the 3 week of last year.
+            Example: If we are in the third week of the current year, then LYTD would be the sum of giving at the third week of last year.
 
         - Year over Year is the percent difference between LYTD and YTD
 
