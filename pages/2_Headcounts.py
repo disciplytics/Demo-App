@@ -1,5 +1,5 @@
 # import packages
-from snowflake.snowpark.context import get_active_session
+#from snowflake.snowpark.context import get_active_session
 import plotly.express as px
 import streamlit as st
 import pandas as pd
@@ -8,11 +8,11 @@ from datetime import timedelta
 #from streamlit_dynamic_filters import DynamicFilters
 
 #st.set_page_config(page_title="Headcount Analytics",layout="wide")
-st.title('Headcount Analytics')
-st.subheader("A Weekly Report For Attendance")
+#st.title('Headcount Analytics')
+
 
 # Get current session
-session = get_active_session()
+#session = get_active_session()
 
 # Load ANALYICAL_ATTENDANCE
 #headcount_data = session.table(f'{st.secrets["database"]}.{st.secrets["schema"]}.HEADCOUNTS_DATA').to_pandas()
@@ -20,52 +20,80 @@ session = get_active_session()
 #dynamic_filters = DynamicFilters(headcount_data, filters=['Event Name', 'Event Frequency', 'Attendance Time', 'Attendance Year', 'Event Day of Week'])
 #dynamic_filters.display_filters(location='columns', num_columns=5, gap='small')
 
-#df_selection = dynamic_filters.filter_df()
+st.title('Headcount Report Demo')
+st.subheader("A Weekly Report For Attendance")
+st.write('This app contains synthetic data and is for demo purposes only.')
+st.write(' ')
 
-headcount_data = pd.DataFrame()
+series_length = 3 * 52
 
 event_names = ["Sunday Morning Adults", "Sunday Morning Kids", "Online Viewers"]
 event_frequencies = ["Weekly"]
 start_at_times = ["10:00", "11:30"]
-start_at_dates = pd.date_range()
 
 
+report_data = pd.DataFrame()
 
-headcount_data = headcount_data.rename(columns={
-    'EVENT_NAME': 'Event Name',
-    'EVENT_FREQUENCY': 'Event Frequency',
-    'STARTS_AT': 'Event Start Time',
-    'TOTAL': 'Total Count',
-    'REGULAR_COUNT': 'Regular Count',
-    'GUEST_COUNT': 'Guest Count',
-    'VOLUNTEER_COUNT': 'Volunteer Count'
-})
+for i in event_names:
+    if i == 'Sunday Morning Adults':
+        weight_i = 1
+    elif i == 'Sunday Morning Kids':
+        weight_i = 0.7
+    elif i == 'Online Viewers':
+        weight_i = 0.2
+    for k in start_at_times:
+        if k == '10:00':
+            weight_k = 0.25
+        elif k == '11:30':
+            weight_k = 0.67
 
+        weight = weight_k * weight_i
+        data = pd.DataFrame(
+            {
+                'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
+                'Total Count': np.random.randint(50, 60, size=(series_length)).astype(int),
+                'Regular Count': np.random.randint(10, 20, size=(series_length)).astype(int),
+                'Guest Count': np.random.randint(10, 15, size=(series_length)).astype(int),
+                'Volunteer Count': np.random.randint(5, 10, size=(series_length)).astype(int),
+                'Weight': weight,
+                'Event Name': i,
+                'Event Time': k,
+                'Event Day of Week': 'Sunday'
+            })
+            
+        data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
+
+        report_data = pd.concat([report_data, data])
+
+def clean_outliers(x):
+    median_x = np.median(x)
+    std_x = np.std(x)
+    ucl_x = median_x + 2*std_x
+
+    if x > ucl_x:
+        x = median_x
+
+    return x
+
+report_data['Total Count'] = report_data['Total Count'].apply(clean_outliers)
+
+#df_selection = dynamic_filters.filter_df()
+
+headcount_data = report_data.copy()
 
 today = pd.to_datetime(pd.Timestamp.now().floor('d'), format="ISO8601", utc = True)
 
-for i in ['Total Count', 'Regular Count', 'Guest Count', 'Volunteer Count', 'MINUTE', 'HOUR']:
+for i in ['Total Count', 'Regular Count', 'Guest Count', 'Volunteer Count']:
     headcount_data[i] = pd.to_numeric(headcount_data[i], downcast="integer")
-
-headcount_data.loc[headcount_data['MINUTE'] == 0, 'MINUTE'] = '00'
-headcount_data.loc[headcount_data['HOUR'] >= 13, 'HOUR'] = (headcount_data['HOUR'] - 12).astype(str)
-
-headcount_data['Event Start Time'] = pd.to_datetime(headcount_data['Event Start Time'], format="ISO8601")
-
-headcount_data.loc[headcount_data['Event Start Time'].dt.hour >= 13, 'Event Start Time'] = headcount_data['Event Start Time'] - timedelta(hours = 12) 
-
-headcount_data['Event Day of Week'] = headcount_data['DAY_OF_WEEK'].astype(str)
 
 di = {'0': 'Sunday', '1': 'Monday', '2': 'Tuesday', '3': 'Wednesday', '4': 'Thursday', '5': 'Friday', '6': 'Saturday'}
 headcount_data.replace({"Event Day of Week": di}, inplace=True)
-headcount_data['Event Year'] = headcount_data['Event Start Time'].dt.year
-headcount_data['Event Month'] = headcount_data['Event Start Time'].dt.month
-headcount_data['Event Week'] =  headcount_data['Event Start Time'].dt.isocalendar().week
-headcount_data['Event Time'] = headcount_data['HOUR'].astype(str) + ":" + headcount_data['MINUTE'].astype(str)
+headcount_data['Event Year'] = headcount_data['Event Date'].dt.year
+headcount_data['Event Month'] = headcount_data['Event Date'].dt.month
+headcount_data['Event Week'] =  headcount_data['Event Date'].dt.isocalendar().week
 headcount_data['Service'] = headcount_data['Event Name'] + " - " + headcount_data['Event Time']
-headcount_data['Event Date'] = pd.to_datetime(headcount_data['Event Start Time']).dt.floor('d')
 # get rid of future events
-headcount_data = headcount_data[headcount_data['Event Date'] < today]
+#headcount_data = headcount_data[headcount_data['Event Date'] < pd.to_datetime(today)]
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
