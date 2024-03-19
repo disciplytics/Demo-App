@@ -67,26 +67,26 @@ def load_data():
                         elif m == 'Dublin, OH':
                             weight_m = 0.75
     
-                weight = weight_k * weight_j * weight_i * weight_l * weight_m
-                data = pd.DataFrame(
-                {
-                    'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                    'Donations_': np.random.randint(2000, 6000, size=(series_length)).astype(int),
-                    'Weight': weight,
-                    'PRIMARY_CAMPUS': i,
-                    'AGE_GROUP': j,
-                    'MEMBERSHIP': k,
-                    'FUND': l,
-                    'DONOR_LOCATION': m,
-                })
-    
-                data['DONATION_YEAR'] = data['Date'].dt.year.astype(int)
-                data['DONATION_MONTH'] = data['Date'].dt.month.astype(int)
-                data['DONATION_WEEK'] = data['Date'].dt.isocalendar().week.astype(int)
-                
-                data['DONATION_AMOUNT'] = data['Donations_'] * data['Weight']
-    
-                report_data = pd.concat([report_data, data])
+                        weight = weight_k * weight_j * weight_i * weight_l * weight_m
+                        data = pd.DataFrame(
+                        {
+                            'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
+                            'Donations_': np.random.randint(2000, 6000, size=(series_length)).astype(int),
+                            'Weight': weight,
+                            'PRIMARY_CAMPUS': i,
+                            'AGE_GROUP': j,
+                            'MEMBERSHIP': k,
+                            'FUND': l,
+                            'DONOR_LOCATION': m,
+                        })
+            
+                        data['DONATION_YEAR'] = data['Date'].dt.year.astype(int)
+                        data['DONATION_MONTH'] = data['Date'].dt.month.astype(int)
+                        data['DONATION_WEEK'] = data['Date'].dt.isocalendar().week.astype(int)
+                        
+                        data['DONATION_AMOUNT'] = data['Donations_'] * data['Weight']
+            
+                        report_data = pd.concat([report_data, data])
     
     def clean_outliers(x):
         median_x = np.median(x)
