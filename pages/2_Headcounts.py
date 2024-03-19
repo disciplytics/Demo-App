@@ -62,9 +62,9 @@ def load_data():
                 
             data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
 
-            data['Regular Count'] = (data['Total Count'] * 0.7).astype(int),
-            data['Guest Count'] = (data['Total Count'] * 0.2).astype(int),
-            data['Volunteer Count'] = (data['Total Count'] * 0.1).astype(int),
+            data['Regular Count'] = (data['Total Count'] * 0.7).astype(int)
+            data['Guest Count'] = (data['Total Count'] * 0.2).astype(int)
+            data['Volunteer Count'] = (data['Total Count'] * 0.1).astype(int)
     
             report_data = pd.concat([report_data, data])
 
