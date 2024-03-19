@@ -25,7 +25,7 @@ st.subheader("A Weekly Report For Attendance")
 st.write('This app contains synthetic data and is for demo purposes only.')
 st.write(' ')
 
-st.cache_data
+@st.cache_data
 def load_data():
     series_length = 3 * 52
     
