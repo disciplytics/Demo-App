@@ -25,61 +25,63 @@ st.subheader("A Weekly Report For Attendance")
 st.write('This app contains synthetic data and is for demo purposes only.')
 st.write(' ')
 
-series_length = 3 * 52
+st.cache_data
+def load_data():
+    series_length = 3 * 52
+    
+    event_names = ["Sunday Morning Adults", "Sunday Morning Kids", "Online Viewers"]
+    event_frequencies = ["Weekly"]
+    start_at_times = ["10:00", "11:30"]
+    
+    
+    report_data = pd.DataFrame()
+    
+    for i in event_names:
+        if i == 'Sunday Morning Adults':
+            weight_i = 0.6
+        elif i == 'Sunday Morning Kids':
+            weight_i = 0.2
+        elif i == 'Online Viewers':
+            weight_i = 0.2
+        for k in start_at_times:
+            if k == '10:00':
+                weight_k = 0.4
+            elif k == '11:30':
+                weight_k = 0.6
+    
+            weight = weight_k * weight_i
+            data = pd.DataFrame(
+                {
+                    'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
+                    'Total Count': np.random.randint(50, 60, size=(series_length)).astype(int),
+                    'Regular Count': np.random.randint(10, 20, size=(series_length)).astype(int),
+                    'Guest Count': np.random.randint(10, 15, size=(series_length)).astype(int),
+                    'Volunteer Count': np.random.randint(5, 10, size=(series_length)).astype(int),
+                    'Weight': weight,
+                    'Event Name': i,
+                    'Event Time': k,
+                    'Event Day of Week': 'Sunday'
+                })
+                
+            data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
+    
+            report_data = pd.concat([report_data, data])
+    
+    def clean_outliers(x):
+        median_x = np.median(x)
+        std_x = np.std(x)
+        ucl_x = median_x + 2*std_x
+    
+        if x > ucl_x:
+            x = median_x
+    
+        return x
+    
+    report_data['Total Count'] = report_data['Total Count'].apply(clean_outliers)
+    
+    #df_selection = dynamic_filters.filter_df()
 
-event_names = ["Sunday Morning Adults", "Sunday Morning Kids", "Online Viewers"]
-event_frequencies = ["Weekly"]
-start_at_times = ["10:00", "11:30"]
-
-
-report_data = pd.DataFrame()
-
-for i in event_names:
-    if i == 'Sunday Morning Adults':
-        weight_i = 1
-    elif i == 'Sunday Morning Kids':
-        weight_i = 0.7
-    elif i == 'Online Viewers':
-        weight_i = 0.2
-    for k in start_at_times:
-        if k == '10:00':
-            weight_k = 0.25
-        elif k == '11:30':
-            weight_k = 0.67
-
-        weight = weight_k * weight_i
-        data = pd.DataFrame(
-            {
-                'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                'Total Count': np.random.randint(50, 60, size=(series_length)).astype(int),
-                'Regular Count': np.random.randint(10, 20, size=(series_length)).astype(int),
-                'Guest Count': np.random.randint(10, 15, size=(series_length)).astype(int),
-                'Volunteer Count': np.random.randint(5, 10, size=(series_length)).astype(int),
-                'Weight': weight,
-                'Event Name': i,
-                'Event Time': k,
-                'Event Day of Week': 'Sunday'
-            })
-            
-        data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
-
-        report_data = pd.concat([report_data, data])
-
-def clean_outliers(x):
-    median_x = np.median(x)
-    std_x = np.std(x)
-    ucl_x = median_x + 2*std_x
-
-    if x > ucl_x:
-        x = median_x
-
-    return x
-
-report_data['Total Count'] = report_data['Total Count'].apply(clean_outliers)
-
-#df_selection = dynamic_filters.filter_df()
-
-headcount_data = report_data.copy()
+headcount_data = load_data()
 
 today = pd.to_datetime(pd.Timestamp.now().floor('d'), format="ISO8601", utc = True)
 
