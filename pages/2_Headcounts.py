@@ -54,9 +54,6 @@ def load_data():
                 {
                     'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
                     'Total Count': np.random.randint(60, 80, size=(series_length)).astype(int),
-                    'Regular Count': np.random.randint(5, 20, size=(series_length)).astype(int),
-                    'Guest Count': np.random.randint(5, 15, size=(series_length)).astype(int),
-                    'Volunteer Count': np.random.randint(5, 10, size=(series_length)).astype(int),
                     'Weight': weight,
                     'Event Name': i,
                     'Event Time': k,
@@ -64,6 +61,10 @@ def load_data():
                 })
                 
             data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
+
+            data['Regular Count'] = (data['Total Count'] * 0.7).astype(int),
+            data['Guest Count'] = (data['Total Count'] * 0.2).astype(int),
+            data['Volunteer Count'] = (data['Total Count'] * 0.1).astype(int),
     
             report_data = pd.concat([report_data, data])
 
