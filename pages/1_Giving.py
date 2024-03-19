@@ -71,7 +71,7 @@ def load_data():
                 data = pd.DataFrame(
                 {
                     'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                    'Donations_': np.random.randint(5, 60, size=(series_length)).astype(int),
+                    'Donations_': np.random.randint(2000, 6000, size=(series_length)).astype(int),
                     'Weight': weight,
                     'PRIMARY_CAMPUS': i,
                     'AGE_GROUP': j,
