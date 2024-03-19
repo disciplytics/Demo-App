@@ -70,7 +70,7 @@ def load_data():
                         weight = weight_k * weight_j * weight_i * weight_l * weight_m
                         data = pd.DataFrame(
                         {
-                            'Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
+                            'DONATION_DATE': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
                             'Donations_': np.random.randint(2000, 6000, size=(series_length)).astype(int),
                             'Weight': weight,
                             'PRIMARY_CAMPUS': i,
@@ -80,9 +80,9 @@ def load_data():
                             'DONOR_LOCATION': m,
                         })
             
-                        data['DONATION_YEAR'] = data['Date'].dt.year.astype(int)
-                        data['DONATION_MONTH'] = data['Date'].dt.month.astype(int)
-                        data['DONATION_WEEK'] = data['Date'].dt.isocalendar().week.astype(int)
+                        data['DONATION_YEAR'] = data['DONATION_DATE'].dt.year.astype(int)
+                        data['DONATION_MONTH'] = data['DONATION_DATE'].dt.month.astype(int)
+                        data['DONATION_WEEK'] = data['DONATION_DATE'].dt.isocalendar().week.astype(int)
                         
                         data['DONATION_AMOUNT'] = data['Donations_'] * data['Weight']
             
@@ -240,7 +240,8 @@ with ytd_tab:
 
     try:
         cytd_donations_year = df_selection[(df_selection['DONATION_YEAR'] == df_selection['DONATION_YEAR'].max())]
-        pytd_donations_year = df_selection[(df_selection['DONATION_YEAR'] == df_selection['DONATION_YEAR'].max()-1)]
+        pytd_donations_year = df_selection[(df_selection['DONATION_YEAR'] == df_selection['DONATION_YEAR'].max()-1) &
+                                          (df_selection['DONATION_WEEK'] < today.isocalendar()[1])]
     
         df_selection_year = pd.concat([pytd_donations_year, cytd_donations_year])
         
