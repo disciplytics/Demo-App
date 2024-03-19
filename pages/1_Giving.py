@@ -98,7 +98,7 @@ def load_data():
     
         return x
     
-    report_data['Donations'] = report_data['Donations'].apply(clean_outliers)
+    report_data['DONATION_AMOUNT'] = report_data['DONATION_AMOUNT'].apply(clean_outliers)
 
     return report_data
 
