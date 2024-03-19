@@ -53,7 +53,7 @@ def load_data():
             data = pd.DataFrame(
                 {
                     'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                    'Total Count': np.random.randint(5, 60, size=(series_length)).astype(int),
+                    'Total Count': np.random.randint(20, 60, size=(series_length)).astype(int),
                     'Regular Count': np.random.randint(5, 20, size=(series_length)).astype(int),
                     'Guest Count': np.random.randint(5, 15, size=(series_length)).astype(int),
                     'Volunteer Count': np.random.randint(5, 20, size=(series_length)).astype(int),
@@ -66,18 +66,6 @@ def load_data():
             data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
     
             report_data = pd.concat([report_data, data])
-    
-    def clean_outliers(x):
-        median_x = np.median(x)
-        std_x = np.std(x)
-        ucl_x = median_x + 2*std_x
-    
-        if x > ucl_x:
-            x = median_x
-    
-        return x
-    
-    report_data['Total Count'] = report_data['Total Count'].apply(clean_outliers)
 
     return report_data
     #df_selection = dynamic_filters.filter_df()
