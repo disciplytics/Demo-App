@@ -78,7 +78,8 @@ def load_data():
         return x
     
     report_data['Total Count'] = report_data['Total Count'].apply(clean_outliers)
-    
+
+    return report_data
     #df_selection = dynamic_filters.filter_df()
 
 headcount_data = load_data()
