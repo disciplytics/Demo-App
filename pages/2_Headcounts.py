@@ -56,7 +56,7 @@ def load_data():
                     'Total Count': np.random.randint(60, 80, size=(series_length)).astype(int),
                     'Regular Count': np.random.randint(5, 20, size=(series_length)).astype(int),
                     'Guest Count': np.random.randint(5, 15, size=(series_length)).astype(int),
-                    'Volunteer Count': np.random.randint(5, 20, size=(series_length)).astype(int),
+                    'Volunteer Count': np.random.randint(5, 10, size=(series_length)).astype(int),
                     'Weight': weight,
                     'Event Name': i,
                     'Event Time': k,
