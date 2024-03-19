@@ -53,7 +53,7 @@ def load_data():
             data = pd.DataFrame(
                 {
                     'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                    'Total Count': np.random.randint(55, 60, size=(series_length)).astype(int),
+                    'Total Count': np.random.randint(60, 80, size=(series_length)).astype(int),
                     'Regular Count': np.random.randint(5, 20, size=(series_length)).astype(int),
                     'Guest Count': np.random.randint(5, 15, size=(series_length)).astype(int),
                     'Volunteer Count': np.random.randint(5, 20, size=(series_length)).astype(int),
