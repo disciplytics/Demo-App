@@ -132,7 +132,8 @@ except:
         
 
         
-trend_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time', 'Event Day of Week', 'Service'])['Total Count'].sum().reset_index()#.sort_values(ascending=True).reset_index()
+trend_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time', 'Event Day of Week', 'Service'])['Total Count'].sum().reset_index()
+trend_time_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time'])['Total Count'].sum().reset_index()#.sort_values(ascending=True).reset_index()
 wow_df = df_selection.groupby(['Event Week', 'Event Year'])['Total Count'].sum().sort_values(ascending=True).reset_index()
 
 trend_fig = px.line(
@@ -142,6 +143,14 @@ trend_fig = px.line(
     title = 'Headcount Trends'
 )
 
+trend_time_fig = px.line(
+    trend_df.groupby(['Event Date', 'Event Time'])['Total Count'].sum().reset_index(),
+    x="Event Date",
+    y="Total Count",
+    hue='Event Time',
+    title = 'Headcount Trends By Event Time'
+)
+
 wow_fig = px.bar(
     wow_df,
     x="Event Week",
@@ -149,14 +158,15 @@ wow_fig = px.bar(
     color = 'Event Year',
     title = 'Headcounts Weekly Trends',
     #render_mode='svg'
-).update_layout(yaxis_title=None, xaxis_title=None)
+)
 
 
 
 
 table = df_selection.pivot_table('Total Count', ['Event Date'], 'Service').reset_index().sort_values(by = ['Event Date'], ascending=False)
 table['Event Date'] = pd.to_datetime(table['Event Date'], format='%Y%m%d', errors='coerce').dt.strftime('%Y-%m-%d')
-tab1, tab2, tab3 = st.tabs(["Headcount Trend", "Headcounts Year-Over-Year", 'Headcount Table'])
+tab1, tab2, tab3 = st.tabs(["Headcount Trend", "Headcounts Year-Over-Year", "Headcount Trend By Service Time"])
 tab1.plotly_chart(trend_fig, theme="streamlit", use_container_width=True)
 tab2.plotly_chart(wow_fig, theme="streamlit", use_container_width=True)
-tab3.dataframe(table.fillna(0))
+tab3.plotly_chart(trend_time_fig, theme="streamlit", use_container_width=True)
+st.dataframe(table.fillna(0))
