@@ -54,7 +54,7 @@ def load_data():
                         'Event Day of Week': 'Sunday'
                     })
                     
-                data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
+                data['Total Count'] = np.round(data['Total Count'] * data['Weight']).astype(int)
         
                 report_data = pd.concat([report_data, data])
 
