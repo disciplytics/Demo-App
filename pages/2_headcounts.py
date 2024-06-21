@@ -54,7 +54,7 @@ def load_data():
                         'Event Day of Week': 'Sunday'
                     })
                     
-                data['Total Count'] = np.round(data['Total Count'] * data['Weight'], 0).astype(int)
+                data['Total Count'] = np.rint(data['Total Count'] * data['Weight'])#.astype(int)
         
                 report_data = pd.concat([report_data, data])
 
@@ -166,8 +166,7 @@ wow_fig = px.bar(
     x="Event Week",
     y="Total Count",
     color = 'Event Year',
-    title = 'Headcounts Weekly Trends',
-    #render_mode='svg'
+    title = 'Headcounts Weekly Trends'
 )
 
 
