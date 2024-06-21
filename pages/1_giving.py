@@ -68,6 +68,19 @@ def load_data():
                             weight_m = 0.75
     
                         weight = weight_k * weight_j * weight_i * weight_l * weight_m
+
+                        if m == 'Columbus, OH':
+                            lat = 39.983334
+                            long = -82.983330
+                        elif m == 'Grove City, OH':
+                            lat = 39.8822
+                            long = -83.0935
+                        elif m == 'Dublin, OH':
+                            lat = 40.0992
+                            long = -83.1141
+                        elif m == 'Worthington, OH':
+                            lat = 40.0931
+                            long = -83.0180
                         data = pd.DataFrame(
                         {
                             'DONATION_DATE': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
@@ -78,6 +91,8 @@ def load_data():
                             'MEMBERSHIP': k,
                             'FUND': l,
                             'DONOR_LOCATION': m,
+                            'LATITUDE': lat,
+                            'LONGITUDE': long,
                         })
             
                         data['DONATION_YEAR'] = data['DONATION_DATE'].dt.year.astype(int)
