@@ -147,7 +147,7 @@ trend_time_fig = px.line(
     trend_df.groupby(['Event Date', 'Event Time'])['Total Count'].sum().reset_index(),
     x="Event Date",
     y="Total Count",
-    hue='Event Time',
+    color='Event Time',
     title = 'Headcount Trends By Event Time'
 )
 
