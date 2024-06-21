@@ -472,6 +472,7 @@ with trend_tab:
         except:
             st.write("No data for current selection. Try selecting more data.")
 
+    st.subheader('Donations Bubble Map')
     # Map of Donations
     try: 
         #map_fig = (px.scatter_mapbox(
