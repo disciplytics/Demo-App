@@ -487,7 +487,7 @@ with trend_tab:
         #trend_tab.plotly_chart(map_fig, theme="streamlit", use_container_width=True)
 
         
-        trend_tab.map(df_selection)
+        trend_tab.map(df_selection, size="DONATION_AMOUNT",)
 
 
 
