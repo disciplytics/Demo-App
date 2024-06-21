@@ -42,7 +42,7 @@ def load_data():
                     weight_j = 0.4
                 
     
-                weight = weight_k * weight_i * weight_j
+                weight = weight_k + weight_i + weight_j
                 data = pd.DataFrame(
                     {
                         'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
