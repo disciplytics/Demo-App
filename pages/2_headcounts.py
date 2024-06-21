@@ -170,9 +170,9 @@ wow_fig = px.bar(
 )
 
 
-
-
-table = df_selection.pivot_table('Total Count', ['Event Date'], 'Service').reset_index().sort_values(by = ['Event Date'], ascending=False)
+table = df_selection.copy()
+table['Total Count'] = np.rint(table['Total Count'])
+table = table.pivot_table('Total Count', ['Event Date'], 'Service').reset_index().sort_values(by = ['Event Date'], ascending=False)
 table['Event Date'] = pd.to_datetime(table['Event Date'], format='%Y%m%d', errors='coerce').dt.strftime('%Y-%m-%d')
 tab1, tab2, tab3 = st.tabs(["Headcount Trend", "Headcounts Year-Over-Year", "Headcount Trend By Service Time"])
 tab1.plotly_chart(trend_fig, theme="streamlit", use_container_width=True)
