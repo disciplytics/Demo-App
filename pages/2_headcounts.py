@@ -15,7 +15,7 @@ def load_data():
     series_length = 3 * 52
     
     event_names = ["Campus 1 - Sunday Morning Service", "Campus 2 - Sunday Morning Service", "Campus 3 - Sunday Morning Service"]
-    attendance_types = ["Attendance", "Volunteer", "Youth"]
+    attendance_types = ["Adult", "Volunteer", "Youth"]
     start_at_times = ["10:00", "11:30"]
     
     
@@ -34,7 +34,7 @@ def load_data():
             elif k == '11:30':
                 weight_k = 0.6
             for j in attendance_types:
-                if j == "Attendance":
+                if j == "Adult":
                     weight_j = 0.5
                 elif j == "Volunteer":
                     weight_j = 0.1
@@ -42,21 +42,21 @@ def load_data():
                     weight_j = 0.4
                 
     
-            weight = weight_k * weight_i
-            data = pd.DataFrame(
-                {
-                    'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
-                    'Total Count': np.random.randint(60, 80, size=(series_length)).astype(int),
-                    'Weight': weight,
-                    'Event Name': i,
-                    'Event Time': k,
-                    'Attendance Type': j,
-                    'Event Day of Week': 'Sunday'
-                })
-                
-            data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
-    
-            report_data = pd.concat([report_data, data])
+                weight = weight_k * weight_i * weight_j
+                data = pd.DataFrame(
+                    {
+                        'Event Date': pd.date_range(end=pd.Timestamp.now().floor('d') , freq='W', periods=series_length),
+                        'Total Count': np.random.randint(60, 80, size=(series_length)).astype(int),
+                        'Weight': weight,
+                        'Event Name': i,
+                        'Event Time': k,
+                        'Attendance Type': j,
+                        'Event Day of Week': 'Sunday'
+                    })
+                    
+                data['Total Count'] = (data['Total Count'] * data['Weight']).astype(int)
+        
+                report_data = pd.concat([report_data, data])
 
     return report_data
     #df_selection = dynamic_filters.filter_df()
