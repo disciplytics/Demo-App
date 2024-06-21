@@ -158,5 +158,5 @@ table = df_selection.pivot_table('Total Count', ['Event Date'], 'Service').reset
 table['Event Date'] = pd.to_datetime(table['Event Date'], format='%Y%m%d', errors='coerce').dt.strftime('%Y-%m-%d')
 tab1, tab2, tab3 = st.tabs(["Headcount Trend", "Headcounts Year-Over-Year", 'Headcount Table'])
 tab1.plotly_chart(trend_fig, theme="streamlit", use_container_width=True)
-wow_fig.plotly_chart(trend_fig, theme="streamlit", use_container_width=True)
+tab2.plotly_chart(wow_fig, theme="streamlit", use_container_width=True)
 tab3.dataframe(table.fillna(0))
