@@ -33,6 +33,14 @@ def load_data():
                 weight_k = 0.4
             elif k == '11:30':
                 weight_k = 0.6
+            for j in attendance_types:
+                if j == "Attendance":
+                    weight_j = 0.5
+                elif j == "Volunteer":
+                    weight_j = 0.1
+                elif j == "Youth":
+                    weight_j = 0.4
+                
     
             weight = weight_k * weight_i
             data = pd.DataFrame(
@@ -42,6 +50,7 @@ def load_data():
                     'Weight': weight,
                     'Event Name': i,
                     'Event Time': k,
+                    'Attendance Type': j,
                     'Event Day of Week': 'Sunday'
                 })
                 
@@ -87,11 +96,11 @@ with col3:
         default=headcount_data[headcount_data['Event Day of Week'] == 'Sunday']['Event Time'].unique())
 with col4:
     sel4 = st.multiselect(
-        "Select Event Day of Week",
-        headcount_data['Event Day of Week'].unique(),
-        default=['Sunday'])
+        "Select Attendance Type",
+        headcount_data['Attendance Type'].unique(),
+        default=headcount_data['Attendance Type'].unique())
     
-df_selection = headcount_data.query('`Event Year`== @sel1').query('`Event Name`== @sel2').query('`Event Time`== @sel3').query('`Event Day of Week`== @sel4')
+df_selection = headcount_data.query('`Event Year`== @sel1').query('`Event Name`== @sel2').query('`Event Time`== @sel3').query('`Attendance Type`== @sel4')
 
 df_selection['Event Year'] = df_selection['Event Year'].astype(str)
 
@@ -132,8 +141,9 @@ except:
         
 
         
-trend_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time', 'Event Day of Week', 'Service'])['Total Count'].sum().reset_index()
-trend_time_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time'])['Total Count'].sum().reset_index()#.sort_values(ascending=True).reset_index()
+trend_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time', 'Attendance Type', 'Service'])['Total Count'].sum().reset_index()
+trend_time_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time'])['Total Count'].sum().reset_index()
+trend_at_df = df_selection.groupby(['Event Date', 'Event Year', 'Event Name', 'Event Time'])['Total Count'].sum().reset_index()
 wow_df = df_selection.groupby(['Event Week', 'Event Year'])['Total Count'].sum().sort_values(ascending=True).reset_index()
 
 trend_fig = px.line(
